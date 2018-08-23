@@ -1,5 +1,5 @@
 require_relative "board"
-
+require 'byebug'
 class SudokuGame
   def self.from_file(filename)
     board = Board.from_file(filename)
@@ -43,13 +43,15 @@ class SudokuGame
   end
 
   def parse_val(string)
-    Integer(string)
+    #Integer(string)
+    string.to_i
   end
 
   def play_turn
+    # debugger
     board.render
-    val = get_pos
-    pos = get_val
+    pos = get_pos
+    val = get_val
     board[pos] = val
   end
 

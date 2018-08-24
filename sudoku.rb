@@ -16,12 +16,11 @@ class SudokuGame
       puts "Please enter a position on the board (e.g., '3,4')"
       print "> "
 
-      begin
+      
         pos = parse_pos(gets.chomp)
-      rescue
+      if valid_pos?(pos) == false
         puts "Invalid position entered (did you use a comma?)"
         puts ""
-
         pos = nil
       end
     end
@@ -34,6 +33,11 @@ class SudokuGame
       puts "Please enter a value between 1 and 9 (0 to clear the tile)"
       print "> "
       val = parse_val(gets.chomp)
+      if valid_val?(val) == false
+        puts "Invalid Value! Enter a number between 0 and 9!";
+        puts "It's over NINE THOUSAND!" if val > 9000
+        puts ""
+      end
     end
     val
   end

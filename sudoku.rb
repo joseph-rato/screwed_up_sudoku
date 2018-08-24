@@ -1,5 +1,5 @@
 require_relative "board"
-
+require "byebug"
 class SudokuGame
   def self.from_file(filename)
     board = Board.from_file(filename)
@@ -12,16 +12,15 @@ class SudokuGame
 
   def get_pos
     pos = nil
+    
     until pos && valid_pos?(pos)
       puts "Please enter a position on the board (e.g., '3,4')"
       print "> "
 
-      begin
         pos = parse_pos(gets.chomp)
-      rescue
+      if valid_pos?(pos) == false
         puts "Invalid position entered (did you use a comma?)"
         puts ""
-
         pos = nil
       end
     end
@@ -33,7 +32,14 @@ class SudokuGame
     until val && valid_val?(val)
       puts "Please enter a value between 1 and 9 (0 to clear the tile)"
       print "> "
-      val = parse_val(gets.chomp)
+       
+        val = parse_val(gets.chomp)
+        
+      if valid_val?(val) == false
+        puts "Invalid value. please enter a number between 1 to 9"
+        puts ""
+        val = nil
+      end 
     end
     val
   end
@@ -64,9 +70,8 @@ class SudokuGame
   end
 
   def valid_pos?(pos)
-    pos.is_a?(Array) &&
-      pos.length == 2 &&
-      pos.all? { |x| x.between?(0, board.size - 1) }
+    pos.is_a?(Array) && pos.length == 2 && pos.all? { |x| x.between?(0, board.size - 1) }
+
   end
 
   def valid_val?(val)
@@ -78,6 +83,6 @@ class SudokuGame
   attr_reader :board
 end
 
-
-game = SudokuGame.from_file("puzzles/sudoku0.txt")
+# 
+game = SudokuGame.from_file("puzzles/sudoku1.txt")
 game.run
